@@ -1,16 +1,16 @@
-# Vivado 2025.1 Docker build script
+# Vivado 2025.2 Docker build script
 
-This repository contains a Xilinx Unified SDI 2025.1 docker image based on Ubuntu 24.04.
-It is based on Thierry Delafontaine's (delafthi) repo, original credits to him.
-Many upgrades went in to make sure the Vivado and Vitis work well in Ubuntu 24.04.
+This repository contains a Xilinx Unified SDI 2025.2 docker image based on Ubuntu 24.04.
+It is based on my previous repo (vivado2025.1_docker) and Thierry Delafontaine's (delafthi) repo, original credits to him.
+Many upgrades went in to make sure the Vivado and Vitis 2025.2 are installed and work well in Ubuntu 24.04.
 
 ## Usage
 
-1. Download the [`Xilinx Unified Installer 2025.1: Linux Self Extracting Web Installer`](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/vivado-design-tools.html)
+1. Download the [`Xilinx Unified Installer 2025.2: Linux Self Extracting Web Installer`](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/vivado-design-tools.html)
    and place into the directory.
 2. Adapt `install_config.txt` to your likings, or regenerate `install_config.txt` by running
-   `./FPGAs_AdaptiveSoCs_Unified_SDI_2025.1_0530_0145_Lin64.bin -- --batch ConfigGen` 
-   and copying the generated file into the directory.
+   `./FPGAs_AdaptiveSoCs_Unified_SDI_2025.2_0530_0145_Lin64.bin -- --batch ConfigGen` 
+   and copying the generated file into the directory. IMPORTANT: The destination now needs to be added manually with the line Destination=/tools/Xilinx
 3. Build the docker image by running `./build.sh`.
 4. At the beginning of the `./build.sh` script you need to log in with your
    Xilinx credentials in order to create a authenication token for the web
@@ -52,9 +52,9 @@ I am adding this list here as it might help other users, even if not using this 
 
 If more other device families need to be added or removed after the image is prepared and one does not want to rebuild:
 
-1. Get the config file of the current installation with `/tools/Xilinx/.xinstall/2025.1/xsetup -b ConfigGen`
+1. Get the config file of the current installation with `/tools/Xilinx/.xinstall/2025.2/xsetup -b ConfigGen`
 2. Modify the install file accordingly with `cp ~/.Xilinx/install_config.txt . && nano install_config.txt`
-3. Generate the authentication token with `/tools/Xilinx/.xinstall/2025.1/xsetup -b AuthTokenGen`
+3. Generate the authentication token with `/tools/Xilinx/.xinstall/2025.2/xsetup -b AuthTokenGen`
 4. Copy the authentication token to the correct folder with `sudo cp ~/.Xilinx/wi_authentication_key  /root/.Xilinx/wi_authentication_key`
-5. Execute the installation with `sudo /tools/Xilinx/.xinstall/2025.1/xsetup -a XilinxEULA,3rdPartyEULA -b Add -c install_config.txt`
-6. Don't forget to commit the changes in docker with `docker ps`, then `docker commit container_ID vivado:2025.1`
+5. Execute the installation with `sudo /tools/Xilinx/.xinstall/2025.2/xsetup -a XilinxEULA,3rdPartyEULA -b Add -c install_config.txt`
+6. Don't forget to commit the changes in docker with `docker ps`, then `docker commit container_ID vivado:2025.2`

@@ -1,0 +1,13 @@
+#!/usr/bin/env xdg-open
+
+[Desktop Entry]
+Version=1.0
+Type=Application
+Terminal=true
+Exec=/bin/bash /home/arthur/Documentos/FPGA/vivado2025.2_docker/run.sh
+Name=Vivado Design Suite
+GenericName=Vivado Design Suite
+Comment[pt_BR]=Vivado Design Suite 2025.2 Containerizada
+Icon=/home/arthur/Documentos/FPGA/vivado2025.2_docker/VivadoIcon.png
+Name[pt_BR]=Vivado 2025.2
+Categories=Development;IDE;Science;Electronics;

@@ -2,8 +2,8 @@ FROM ubuntu:24.04
 
 LABEL maintainer "Arthur Precht <arthurfprecht@gmail.com>"
 
-ARG XLNX_VIVADO_VERSION=2025.1
-ARG XLNX_UNIFIED_INSTALLER=FPGAs_AdaptiveSoCs_Unified_SDI_2025.1_0530_0145_Lin64.bin
+ARG XLNX_VIVADO_VERSION=2025.2
+ARG XLNX_UNIFIED_INSTALLER=FPGAs_AdaptiveSoCs_Unified_SDI_2025.2_0530_0145_Lin64.bin
 ARG XLNX_VIVADO_AUTH_FILE=wi_authentication_key
 ARG XLNX_VIVADO_BATCH_CONFIG_FILE=install_config_vivado.txt
 ARG XLNX_PETALINUX_BATCH_CONFIG_FILE=install_config_petalinux.txt
