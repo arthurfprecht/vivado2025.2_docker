@@ -1,4 +1,4 @@
-# Vivado 2025.2 Docker build script
+# Vivado 2025.2.1 Docker build script
 
 This repository contains a Xilinx Unified SDI 2025.2 docker image based on Ubuntu 24.04.
 It is based on my previous repo (vivado2025.1_docker) and Thierry Delafontaine's (delafthi) repo, original credits to him.
@@ -45,18 +45,14 @@ I am adding this list here as it might help other users, even if not using this 
 - GID PID conflict blocks the usage of sudo - Ubuntu creates a default 
   GID PID 1000 called "ubuntu" that conflicts with the current user - Fixed 
   by deleting this "ubuntu" user
-- Vitis does not open at all - Wrong libstdc++ bundled - Fix discussed in
-  [`a post on Xilinx forum`](https://adaptivesupport.amd.com/s/question/0D54U000091FX0XSAW/vitis-no-longer-opening-ubuntu-2404-vitis-20242?language=en_US)
-- XSDB crashes upon being launched from Vitis - Wrond rlwrap package version 
-  bundled - Fix discussed in [`another post on Xilinx forum`](https://adaptivesupport.amd.com/s/question/0D54U00006alPtOSAU/segmentation-fault-invoking-xsct-indirectly-using-the-xsct-script-in-vitis-bin-folder-resolved?language=en_US)
 
 ## Updating device families once image is built
 
 If more other device families need to be added or removed after the image is prepared and one does not want to rebuild:
 
-1. Get the config file of the current installation with `/tools/Xilinx/.xinstall/2025.2/xsetup -b ConfigGen`
+1. Get the config file of the current installation with `/tools/Xilinx/.xinstall/2025.2.1/xsetup -b ConfigGen`
 2. Modify the install file accordingly with `cp ~/.Xilinx/install_config.txt . && nano install_config.txt`
-3. Generate the authentication token with `/tools/Xilinx/.xinstall/2025.2/xsetup -b AuthTokenGen`
+3. Generate the authentication token with `/tools/Xilinx/.xinstall/2025.2.1/xsetup -b AuthTokenGen`
 4. Copy the authentication token to the correct folder with `sudo cp ~/.Xilinx/wi_authentication_key  /root/.Xilinx/wi_authentication_key`
-5. Execute the installation with `sudo /tools/Xilinx/.xinstall/2025.2/xsetup -a XilinxEULA,3rdPartyEULA -b Add -c install_config.txt`
-6. Don't forget to commit the changes in docker with `docker ps`, then `docker commit container_ID vivado:2025.2`
+5. Execute the installation with `sudo /tools/Xilinx/.xinstall/2025.2.1/xsetup -a XilinxEULA,3rdPartyEULA -b Add -c install_config.txt`
+6. Don't forget to commit the changes in docker with `docker ps`, then `docker commit container_ID vivado:2025.2.1`
