@@ -3,10 +3,10 @@ FROM ubuntu:24.04
 LABEL maintainer "Arthur Precht <arthurfprecht@gmail.com>"
 
 ARG XLNX_VIVADO_VERSION=2025.2
-ARG XLNX_UNIFIED_INSTALLER=FPGAs_AdaptiveSoCs_Unified_SDI_2025.2_0530_0145_Lin64.bin
+ARG XLNX_UNIFIED_INSTALLER=FPGAs_AdaptiveSoCs_Unified_SDI_2025.2.1_0320_0604.tar
+ARG XLNX_PETALINUX_INSTALLER=petalinux-v2025.2-11160223-installer.run
 ARG XLNX_VIVADO_AUTH_FILE=wi_authentication_key
 ARG XLNX_VIVADO_BATCH_CONFIG_FILE=install_config_vivado.txt
-ARG XLNX_PETALINUX_BATCH_CONFIG_FILE=install_config_petalinux.txt
 
 ENV XLNX_VIVADO_VERSION=${XLNX_VIVADO_VERSION}
 ENV XLNX_INSTALL_LOCATION=/tools/Xilinx
@@ -94,32 +94,36 @@ RUN apt-get autoclean && \
 	rm ./libtinfo5_6.3-2ubuntu0.3_amd64.deb
 
 # Copy the vivado installation files
-COPY ${XLNX_UNIFIED_INSTALLER} ${XLNX_INSTALL_LOCATION}/tmp/${XLNX_UNIFIED_INSTALLER}
+RUN mkdir -p ${XLNX_INSTALL_LOCATION}/tmp
 COPY ${XLNX_VIVADO_BATCH_CONFIG_FILE} ${XLNX_INSTALL_LOCATION}/tmp/${XLNX_VIVADO_BATCH_CONFIG_FILE}
-COPY ${XLNX_PETALINUX_BATCH_CONFIG_FILE} ${XLNX_INSTALL_LOCATION}/tmp/${XLNX_PETALINUX_BATCH_CONFIG_FILE}
 COPY ${XLNX_VIVADO_AUTH_FILE} /root/.Xilinx/wi_authentication_key
 
-# Prepare for Install
-RUN cd ${XLNX_INSTALL_LOCATION}/tmp/ && \
-	chmod +x ${XLNX_UNIFIED_INSTALLER}	
+# Prepare for Installs
+WORKDIR ${XLNX_INSTALL_LOCATION}/tmp
+RUN mkdir -p Vivado
 
 # Install Vivado
-RUN cd ${XLNX_INSTALL_LOCATION}/tmp/ && \
-	./${XLNX_UNIFIED_INSTALLER} -- \
+RUN --mount=type=bind,target=Installers_folder \
+    cd ${XLNX_INSTALL_LOCATION}/tmp/ && \
+    tar -xvf Installers_folder/Installers_folder/${XLNX_UNIFIED_INSTALLER} -C ./Vivado && \
+    ls -lah && \
+    ls -lah Vivado && \
+	./Vivado/xsetup \
 	--agree XilinxEULA,3rdPartyEULA \
 	--batch Install \
-	--config ${XLNX_INSTALL_LOCATION}/tmp/${XLNX_VIVADO_BATCH_CONFIG_FILE}
-
+	--config ${XLNX_INSTALL_LOCATION}/tmp/${XLNX_VIVADO_BATCH_CONFIG_FILE} && \
+    rm -rf ./Vivado
+    
 # Install Petalinux
-RUN cd ${XLNX_INSTALL_LOCATION}/tmp/ && \
-	./${XLNX_UNIFIED_INSTALLER} -- \
-	--agree XilinxEULA,3rdPartyEULA \
-	--batch Install \
-	--config ${XLNX_INSTALL_LOCATION}/tmp/${XLNX_PETALINUX_BATCH_CONFIG_FILE}	
+RUN --mount=type=bind,target=Installers_folder \
+    cd Installers_folder/Installers_folder/${XLNX_INSTALL_LOCATION}/tmp/ && \
+	./${XLNX_PETALINUX_INSTALLER}  \
+    -y \	
+#   --platform "microblaze"
+    --dir ${XLNX_INSTALL_LOCATION}
 	
 # Cleanup Install
-RUN rm -rf ${XLNX_INSTALL_LOCATION}/tmp && \
-	rm -rf /root/.Xilinx/wi_authentication_key 
+RUN rm -rf /root/.Xilinx/wi_authentication_key 
 	
 # Remove default ubuntu user that causes conflicts with the entrypoint
 RUN deluser --remove-home ubuntu

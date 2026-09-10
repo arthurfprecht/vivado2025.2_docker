@@ -3,24 +3,26 @@
 This repository contains a Xilinx Unified SDI 2025.2 docker image based on Ubuntu 24.04.
 It is based on my previous repo (vivado2025.1_docker) and Thierry Delafontaine's (delafthi) repo, original credits to him.
 Many upgrades went in to make sure the Vivado and Vitis 2025.2 are installed and work well in Ubuntu 24.04.
+Now offline-install capable!!!
 
 ## Usage
 
-1. Download the [`Xilinx Unified Installer 2025.2: Linux Self Extracting Web Installer`](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/vivado-design-tools.html)
-   and place into the directory.
-2. Adapt `install_config.txt` to your likings, or regenerate `install_config.txt` by running
-   `./FPGAs_AdaptiveSoCs_Unified_SDI_2025.2_0530_0145_Lin64.bin -- --batch ConfigGen` 
-   and copying the generated file into the directory. IMPORTANT: The destination now needs to be added manually with the line Destination=/tools/Xilinx
-3. Build the docker image by running `./build.sh`.
-4. At the beginning of the `./build.sh` script you need to log in with your
+1. Download the [`AMD Unified Installer for FPGAs & Adaptive SoCs 2025.2 SFD`](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/vivado-design-tools.html)
+   and place into Installers_folder directory.
+2. Download the [`PetaLinux 2025.2 Installer`](https://www.amd.com/en/support/downloads/adaptive-socs-and-fpgas/embedded-software.html) and place into Installers_folder directory. Run `chmod +x petalinux-v2025.2-11160223-installer.run` in case of permission errors
+3. Adapt `install_config_vivado.txt` to your likings, or regenerate `install_config.txt` by running `regen_config.sh`, customizing the options and copying/renaming the generated file into this directory. 
+4. IMPORTANT: The destination now needs to be added manually with the line Destination=/tools/Xilinx
+5. Adapt the Dockerfile Install Petalinux section with the desired Petalinux architectures. Default is all.
+6. Build the docker image by running `./build.sh`.
+7. At the beginning of the `./build.sh` script you need to log in with your
    Xilinx credentials in order to create a authenication token for the web
    installer.
-5. Adjust the `PROJECT_PATH` variable in `run.sh` to mount your project, 
+8. Adjust the `PROJECT_PATH` variable in `run.sh` to mount your project, 
    workspace and miscelaneous folders, as well as device names (for instance,
    USB to serial adapters, cable devices) and run the docker image with `./run.sh`.
-6. Start Vivado from the docker terminal with `vivado`. Vitis can be started using `vitis`
-7. The password for sudo is the username that gets registered at the start of the session
-8. The root password in the container is root
+9. Start Vivado from the docker terminal with `vivado`. Vitis can be started using `vitis`
+10. The password for sudo is the username that gets registered at the start of the session
+11. The root password in the container is root
 
 ## Adding Hardware access capabilities
 

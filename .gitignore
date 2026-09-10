@@ -1,2 +1,3 @@
 wi_authentication_key
-FPGAs_AdaptiveSoCs_Unified_SDI_202*
+Installers_folder/*
+!Installers_folder/.gitkeep 
