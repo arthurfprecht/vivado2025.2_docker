@@ -24,4 +24,4 @@ docker run -it --rm \
   --device=/dev/bus/usb \
   --device=/dev/dri \
   -w ${HOME} \
-  vivado:2025.2
+  vivado:2025.2.1

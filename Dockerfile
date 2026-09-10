@@ -134,4 +134,4 @@ RUN mkdir ${HOME}/Workspaces
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
-CMD ["/bin/bash", "-c", "source ${XLNX_INSTALL_LOCATION}/${XLNX_VIVADO_VERSION}/Vivado/settings64.sh;source ${XLNX_INSTALL_LOCATION}/${XLNX_VIVADO_VERSION}/Vitis/settings64.sh;source ${XLNX_INSTALL_LOCATION}/${XLNX_VIVADO_VERSION}/PetaLinux/settings.sh;export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${XLNX_INSTALL_LOCATION}/${XLNX_VIVADO_VERSION}/lib/lnx64.o/;/bin/bash"]
+CMD ["/bin/bash", "-c", "source ${XLNX_INSTALL_LOCATION}/${XLNX_VIVADO_VERSION}/Vivado/settings64.sh;source ${XLNX_INSTALL_LOCATION}/${XLNX_VIVADO_VERSION}/Vitis/settings64.sh;source ${XLNX_INSTALL_LOCATION}/${XLNX_VIVADO_VERSION}/Petalinux/settings.sh;export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${XLNX_INSTALL_LOCATION}/${XLNX_VIVADO_VERSION}/lib/lnx64.o/;/bin/bash"]
