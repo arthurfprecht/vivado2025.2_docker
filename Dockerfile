@@ -33,7 +33,7 @@ RUN apt-get install -y -qq \
 
 # Required libtinfo5 as AR 76616, found at https://adaptivesupport.amd.com/s/article/76616?language=en_US
 RUN wget https://security.ubuntu.com/ubuntu/pool/universe/n/ncurses/libtinfo5_6.3-2ubuntu0.3_amd64.deb && \
-	sudo apt install ./libtinfo5_6.3-2ubuntu0.3_amd64.deb -y
+	apt-get install ./libtinfo5_6.3-2ubuntu0.3_amd64.deb -y
 
 # Requirements for Vitis
 # rlwrap to fix not opening XSDB server under Ubuntu 22.04 or newer verions to fix a bug in XSDB
@@ -117,7 +117,7 @@ RUN --mount=type=bind,target=Installers_folder \
     cd ${XLNX_INSTALL_LOCATION}/tmp/ && \
 	./Installers_folder/Installers_folder/${XLNX_PETALINUX_INSTALLER}  \
     -y \	
-#   --platform "microblaze"
+#   --platform "microblaze" \
     --dir ${XLNX_INSTALL_LOCATION}/${XLNX_VIVADO_VERSION}/Petalinux
 	
 # Cleanup Install
