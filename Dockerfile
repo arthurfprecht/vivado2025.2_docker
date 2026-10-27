@@ -1,6 +1,6 @@
 FROM ubuntu:24.04
 
-LABEL maintainer "Arthur Precht <arthurfprecht@gmail.com>"
+LABEL maintainer="Arthur Precht <arthurfprecht@gmail.com>"
 
 ARG XLNX_VIVADO_VERSION=2025.2.1
 ARG XLNX_VIVADO_INSTALLER=FPGAs_AdaptiveSoCs_Unified_SDI_2025.2.1_0320_0604.tar
@@ -12,7 +12,7 @@ ARG XLNX_VIVADO_BATCH_CONFIG_FILE=install_config_vivado.txt
 ENV XLNX_VIVADO_VERSION=${XLNX_VIVADO_VERSION}
 ENV XLNX_INSTALL_LOCATION=/tools/Xilinx
 
-ENV DEBIAN_FRONTEND noninteractive
+ENV DEBIAN_FRONTEND=noninteractive
 
 RUN dpkg --add-architecture i386 && \
 	apt-get update && \
